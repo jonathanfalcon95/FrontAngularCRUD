@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6" style="text-align:center;">
+        <h3>CRUD Operation in Angular with TypeScript</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <span (click)="addNewUser()" class="btn btn-primary btn-xs">Add New User</span>
+        <br /><br />
+        <div class="table-responsive">
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th>User Id</th>
+              <th>Username</th>
+              <th>Name</th>
+              <th>LastName</th>
+              <th>Age</th>    
+              <th>Last Session Date Time</th>            
+              <th>Edit</th>
+              <th>Delete</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of UserList">
+                <td>{{item.id}}</td>
+                <td>{{item.userName}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.lastName}}</td>     
+                <td>{{item.age}}</td>              
+                <td>{{item.lastSessionDateTime | date}}</td> 
+                <td><span class="btn btn-primary btn-xs" (click)="editUser(item.UserId)">
+                    <span class="glyphicon glyphicon-pencil"></span></span></td>
+                <td><span class="btn btn-danger btn-xs" (click)="deleteUser(item.UserId, item.title)">
+                    <span class="glyphicon glyphicon-trash"></span></span></td>
+              </tr>
+            </tbody>
+          </table>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

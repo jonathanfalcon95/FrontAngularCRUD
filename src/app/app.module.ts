@@ -1,64 +1,48 @@
-import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { ToastrModule } from "ngx-toastr";
+
+import { SidebarModule } from './sidebar/sidebar.module';
+import { FooterModule } from './shared/footer/footer.module';
+import { NavbarModule} from './shared/navbar/navbar.module';
+import { FixedPluginModule} from './shared/fixedplugin/fixedplugin.module';
+
+import { AppComponent } from './app.component';
+import { AppRoutes } from './app.routing';
+
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule, Routes } from '@angular/router';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MatButtonModule, MatIconModule } from '@angular/material';
-import { TranslateModule } from '@ngx-translate/core';
-import 'hammerjs';
 
-import { FuseModule } from '@fuse/fuse.module';
-import { FuseSharedModule } from '@fuse/shared.module';
-import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
 
-import { fuseConfig } from 'app/fuse-config';
-
-import { AppComponent } from 'app/app.component';
-import { LayoutModule } from 'app/layout/layout.module';
-import { SampleModule } from 'app/main/sample/sample.module';
-
-const appRoutes: Routes = [
-    {
-        path      : '**',
-        redirectTo: 'sample'
-    }
-];
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    imports     : [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        RouterModule.forRoot(appRoutes),
-
-        TranslateModule.forRoot(),
-
-        // Material moment date module
-        MatMomentDateModule,
-
-        // Material
-        MatButtonModule,
-        MatIconModule,
-
-        // Fuse modules
-        FuseModule.forRoot(fuseConfig),
-        FuseProgressBarModule,
-        FuseSharedModule,
-        FuseSidebarModule,
-        FuseThemeOptionsModule,
-
-        // App modules
-        LayoutModule,
-        SampleModule
-    ],
-    bootstrap   : [
-        AppComponent
-    ]
+  declarations: [
+    AppComponent,
+    AdminLayoutComponent,
+    
+    
+  ],
+  
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    
+    HttpClientModule,
+    RouterModule.forRoot(AppRoutes,{
+      useHash: true
+    }),
+    SidebarModule,
+    NavbarModule,
+    ToastrModule.forRoot(),
+    FooterModule,
+    FixedPluginModule
+  ],
+ 
+  
+  
+ 
+  bootstrap: [AppComponent]
 })
-export class AppModule
-{
-}
+export class AppModule { }
