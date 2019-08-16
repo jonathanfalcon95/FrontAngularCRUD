@@ -16,6 +16,8 @@ import { UpgradeComponent }         from '../../pages/upgrade/upgrade.component'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
+import {HardwareComponent} from '../../pages/hardware/hardware.component';
+import {SoftwareComponent} from '../../pages/software/software.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -35,6 +37,8 @@ import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
+    HardwareComponent,
+    SoftwareComponent
    
   ],
   

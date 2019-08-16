@@ -14,6 +14,7 @@ import { AppRoutes } from './app.routing';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AssignmentComponent } from './pages/assignment/assignment.component';
 
 
 
@@ -21,6 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    AssignmentComponent,
+  
     
     
   ],
