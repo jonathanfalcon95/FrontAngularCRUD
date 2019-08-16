@@ -12,9 +12,7 @@ import { IconsComponent }           from '../../pages/icons/icons.component';
 import { MapsComponent }            from '../../pages/maps/maps.component';
 import { NotificationsComponent }   from '../../pages/notifications/notifications.component';
 import { UpgradeComponent }         from '../../pages/upgrade/upgrade.component';
-import { AddUserComponent } from '../../pages/user/add-user/add-user.component';
-import { EditUserComponent } from '../../pages/user/edit-user/edit-user.component';
-import { DeleteUserComponent } from '../../pages/user/delete-user/delete-user.component';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
@@ -37,12 +35,10 @@ import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
-    AddUserComponent,
-    EditUserComponent,
-    DeleteUserComponent,
+   
   ],
   
-  entryComponents:[AddUserComponent, DeleteUserComponent, EditUserComponent],
+  
   providers: [BsModalService],
 })
 

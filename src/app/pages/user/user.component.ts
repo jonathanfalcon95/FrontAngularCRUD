@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,TemplateRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
+
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { GlobalService } from "../providers/global.service";
-import { EditUserComponent} from "./edit-user/edit-user.component"
-import { AddUserComponent} from "./Add-user/Add-user.component"
-import { DeleteUserComponent} from "./delete-user/delete-user.component"
+
 @Component({
     selector: 'user-cmp',
     moduleId: module.id,
@@ -22,19 +21,40 @@ export class UserComponent implements OnInit{
     title = 'AngularCRUDExample';
     UserList: any;
     bsModalRef: BsModalRef;
-  
+    user: any;
+    titleModal: string="";
+    save: boolean=false;
+    edit: boolean=false;
     constructor(private globalService: GlobalService, private bsModalService: BsModalService) {
+       this.user=[];
+       
+    }
+    OpenUserModal(template: TemplateRef<any>, option, index:number) {
+      this.user=[]
+      if(option==="save"){
+        this.titleModal='Create User';
+        this.save=true;
+      }else
+      if(option==="edit"){
+        this.titleModal='Edit User';
+        this.edit=true;
+        console.log(this.UserList[index])
+        this.user=this.UserList[index];
+        console.log(this.user);
+      }else
+      if(option==='delete'){
+        this.user=this.UserList[index];
+
+      }
+      this.bsModalRef = this.bsModalService.show(template);
       
     }
-  
+
     getUsers() {
         this.globalService.getModel("/users").then(
             result => {
               console.log(result);
-             
               this.UserList = result;
-             
-      
             },
             err => {
               console.log(err);
@@ -42,41 +62,82 @@ export class UserComponent implements OnInit{
             }
           );
     }
+    
+    
   
-    addNewUser() {
-      this.bsModalRef = this.bsModalService.show(AddUserComponent);
-      this.bsModalRef.content.event.subscribe(result => {
-        if (result == 'OK') {
+    deleteUser() {
+      this.globalService.removeModel(this.user.id,"/users").then(
+        result => {
+          console.log(result);
           this.getUsers();
+        },
+        err => {
+          console.log(err);
+          
+          //this.loader.dismiss();
         }
-      });
+      );
+      
+      this.onClose()
     }
   
-    deleteUser(UserId: number, title: string) {
-    //   this.bsModalRef = this.bsModalService.show(DeleteUserComponent);
-    //   this.bsModalRef.content.UserId = UserId;
-    //   this.bsModalRef.content.title = title;
-    //   this.bsModalRef.content.event.subscribe(result => {
-    //     console.log("deleted", result);
-    //     if (result == 'OK') {
-    //       setTimeout(() => {
-    //         this.UserList=[];
-    //         this.getUsers();
-    //       }, 5000);
-    //     }
-    //   });
+    editUser() {
+      console.log(this.user)
+      
+      let postUser = {
+        'id': this.user.id,
+        'userName': this.user.userName,
+        'Name': this.user.name,
+        'lastName': this.user.lastName,
+        'Age': this.user.age,
+        'lastSessionDateTime': '2019-08-05T15:02:29.393'
+      };
+  
+      this.globalService.updateModel(this.user.id,postUser, "/users").then(
+        result => {
+          console.log(result);
+          this.getUsers();
+        },
+        err => {
+          console.log(err);
+          //this.loader.dismiss();
+        }
+      );
+     
+      this.onClose()
+    }
+
+
+    saveUser() {
+      console.log(this.user)
+      
+      let postUser = {
+        'userName': this.user.userName,
+        'Name': this.user.name,
+        'lastName': this.user.lastName,
+        'Age': this.user.age,
+        'lastSessionDateTime': '2019-08-05T15:02:29.393'
+      };
+  
+      this.globalService.addModel(postUser, "/users").then(
+        result => {
+          console.log(result);
+          this.getUsers();
+        },
+        err => {
+          console.log(err);
+          //this.loader.dismiss();
+        }
+      );
+     
+      this.onClose();
     }
   
-    editUser(UserId: number) {
-    //   this.globalService.changeUserId(UserId);
-  
-    //   this.bsModalRef = this.bsModalService.show(EditUserComponent);
-    //   this.bsModalRef.content.event.subscribe(result => {
-    //     if (result == 'OK') {
-    //       setTimeout(() => {
-    //         this.getUsers();
-    //       }, 5000);
-    //     }
-    //   });
+    onClose() {
+      this.edit=false;
+      this.save=false;
+      this.bsModalRef.hide();
     }
+  
+    
 }

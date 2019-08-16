@@ -40,7 +40,7 @@ import { HttpClientModule } from '@angular/common/http';
     FixedPluginModule
   ],
  
-  
+
   
  
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-
+import { ToastrService } from "ngx-toastr";
 
 const httpOptionsDefault = {
     headers: new HttpHeaders({
@@ -25,7 +25,7 @@ export class GlobalService {
     Model: any = {};
     tipo: String;
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, private toastr: ToastrService) {
         //this.apiBaseUrl = 'https://localhost:44362/api'; //endpoint local
         this.apiBaseUrl = 'https://jfalcon.azurewebsites.net/api'; //endpoint azure
     }
@@ -46,7 +46,7 @@ export class GlobalService {
             this.http.get(this.apiBaseUrl + "" + tipo, httpOptions).subscribe(data => {
                 resolve(data);
                 console.log(data);
-
+                
 
             }, err => {
                 console.log(err);
@@ -78,14 +78,14 @@ export class GlobalService {
         return new Promise(resolve => {
             this.http.post(this.apiBaseUrl + "" + tipo, model, httpOptions).subscribe((data: any) => {
                 console.log(data);
-
+                this.showNotification('bottom', 'right', 2, "Datos guardados con exito");
 
 
 
                 resolve(data);
             }, (err: any) => {
                 console.log(err);
-
+                this.showNotification('bottom', 'right', 4, err);
 
             })
         })
@@ -96,14 +96,14 @@ export class GlobalService {
         return new Promise(resolve => {
             this.http.put(this.apiBaseUrl + "" + tipo + '/' + id, model, httpOptions).subscribe((data: any) => {
                 console.log(data);
-
+                this.showNotification('bottom', 'right', 2, "Datos Actualizados con exito");
 
 
 
                 resolve(data);
             }, (err: any) => {
                 console.log(err);
-
+                this.showNotification('bottom', 'right', 4, err);
 
             })
         })
@@ -114,14 +114,14 @@ export class GlobalService {
         return new Promise(resolve => {
             this.http.delete(this.apiBaseUrl + "" + tipo + '/' + id, httpOptions).subscribe((data: any) => {
                 console.log(data);
-
+                this.showNotification('bottom', 'right', 2, "Datos Eliminados con exito");
 
 
 
                 resolve(data);
             }, (err: any) => {
                 console.log(err);
-
+                this.showNotification('bottom', 'right', 4, err);
 
             })
         })
@@ -140,4 +140,81 @@ export class GlobalService {
             })
         })
     }
+
+
+
+
+    showNotification(from, align, color, text) {
+        
+    
+        switch (color) {
+          case 1:
+            this.toastr.info(
+            '<span data-notify="icon" class="nc-icon nc-bell-55"></span><span data-notify="message"><b>'+text+'</b></span>',
+              "",
+              {
+                timeOut: 4000,
+                closeButton: true,
+                enableHtml: true,
+                toastClass: "alert alert-info alert-with-icon",
+                positionClass: "toast-" + from + "-" + align
+              }
+            );
+            break;
+          case 2:
+            this.toastr.success(
+                '<span data-notify="icon" class="nc-icon nc-bell-55"></span><span data-notify="message"><b>'+text+'</b></span>',
+              "",
+              {
+                timeOut: 4000,
+                closeButton: true,
+                enableHtml: true,
+                toastClass: "alert alert-success alert-with-icon",
+                positionClass: "toast-" + from + "-" + align
+              }
+            );
+            break;
+          case 3:
+            this.toastr.warning(
+                '<span data-notify="icon" class="nc-icon nc-bell-55"></span><span data-notify="message"><b>'+text+'</b></span>',
+              "",
+              {
+                timeOut: 4000,
+                closeButton: true,
+                enableHtml: true,
+                toastClass: "alert alert-warning alert-with-icon",
+                positionClass: "toast-" + from + "-" + align
+              }
+            );
+            break;
+          case 4:
+            this.toastr.error(
+                '<span data-notify="icon" class="nc-icon nc-bell-55"></span><span data-notify="message"><b>'+text+'</b></span>',
+              "",
+              {
+                timeOut: 4000,
+                enableHtml: true,
+                closeButton: true,
+                toastClass: "alert alert-danger alert-with-icon",
+                positionClass: "toast-" + from + "-" + align
+              }
+            );
+            break;
+          case 5:
+            this.toastr.show(
+                '<span data-notify="icon" class="nc-icon nc-bell-55"></span><span data-notify="message"><b>'+text+'</b></span>',
+              "",
+              {
+                timeOut: 4000,
+                closeButton: true,
+                enableHtml: true,
+                toastClass: "alert alert-primary alert-with-icon",
+                positionClass: "toast-" + from + "-" + align
+              }
+            );
+            break;
+          default:
+            break;
+        }
+      }
 }
