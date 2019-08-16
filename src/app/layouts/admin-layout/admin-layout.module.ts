@@ -18,6 +18,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 import {HardwareComponent} from '../../pages/hardware/hardware.component';
 import {SoftwareComponent} from '../../pages/software/software.component';
+import {AssignmentComponent} from '../../pages/assignment/assignment.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -38,7 +39,8 @@ import {SoftwareComponent} from '../../pages/software/software.component';
     MapsComponent,
     NotificationsComponent,
     HardwareComponent,
-    SoftwareComponent
+    SoftwareComponent,
+    AssignmentComponent
    
   ],
   
