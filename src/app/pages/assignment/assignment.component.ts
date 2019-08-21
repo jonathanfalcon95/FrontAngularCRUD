@@ -34,22 +34,26 @@ constructor(private globalService: GlobalService, private bsModalService: BsModa
    this.assignment=[];
    this.AssList=[];
 }
-OpenUserModal(template: TemplateRef<any>, option, index:number) {
-  this.user=[]
+OpenAssModal(template: TemplateRef<any>, option, index:number) {
+  this.user=[];
+  this.assignment=[];
+  this.AssList=[];
   if(option==="save"){
     this.titleModal='Assignment';
     this.save=true;
   }else
   if(option==="edit"){
-    this.titleModal='Edit User';
-    this.edit=true;
+    this.titleModal='Assignment';
+    this.save=true;
     console.log(this.UserList[index])
     this.user=this.UserList[index];
+    this.assignment.UserID=this.user.id
+    this.showAss();
     console.log(this.user);
   }else
   if(option==='delete'){
-    this.user=this.UserList[index];
-
+   
+    this.assignment=this.AssList[index]
   }
   this.bsModalRef = this.bsModalService.show(template);
   
@@ -106,8 +110,15 @@ console.log("done");
 
 }
 
-deleteUser() {
-  this.globalService.removeModel(this.user.id,"/users").then(
+deleteAss() {
+
+  let postAss = {
+    "userID": this.assignment.UserID,
+    "softwareID": this.assignment.SoftwareID,
+    "hardwareID": this.assignment.HardwareID,
+   };
+
+  this.globalService.addModel(postAss,"assignment/delete").then(
     result => {
       console.log(result);
       this.getAss();
@@ -122,7 +133,7 @@ deleteUser() {
   this.onClose()
 }
 
-editAss() {
+editAss(index) {
   console.log(this.user)
   
   let postUser = {
@@ -162,14 +173,16 @@ console.log(postAss);
   this.globalService.addModel(postAss, "/assignment").then(
     result => {
       console.log(result);
-      this.getAss();
+      //this.getAss();
+      this.showAss();
     },
     err => {
       console.log(err);
     }
   );
+ this.assignment.SoftwareID=null;
+ this.assignment.HardwareID=null;
  
-  this.onClose();
 }
 
 onClose() {
