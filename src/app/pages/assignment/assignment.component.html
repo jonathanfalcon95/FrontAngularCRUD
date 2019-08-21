@@ -5,7 +5,7 @@
           <h4 class="card-title"></h4>
         </div>
       
-          <span  (click)="OpenAssModal(template,'save')" class="btn btn-primary btn-xs">Add New Assignment</span>
+          <span  (click)="OpenAssignmentModal(template,'save')" class="btn btn-primary btn-xs">Add New Assignment</span>
           <br /><br />
           <div class="table-responsive">
             <table id="mytable" class="table table-bordred table-striped">
@@ -16,7 +16,7 @@
                 <th>LastName</th>
                  
                 <th>Last Session Date Time</th>            
-                <th>Show Assigments</th>
+                <th>Show Assignment</th>
             
               </thead>
               <tbody>
@@ -26,7 +26,7 @@
                   <td>{{item.name}}</td>
                   <td>{{item.lastName}}</td>            
                   <td>{{item.lastSessionDateTime | date}}</td> 
-                  <td><span class="btn btn-primary btn-xs" (click)="OpenAssModal(template,'edit',i)">
+                  <td><span class="btn btn-primary btn-xs" (click)="OpenAssignmentModal(template,'edit',i)">
                       <span class="nc-icon nc-ruler-pencil"></span></span></td>
                  
                 </tr>
@@ -50,7 +50,7 @@
          
           <div class="form-group">
             <label class="col-sm-2 control-label" >Usuario</label>
-            <select class="form-control"   [(ngModel)]="assignment.UserID" (ngModelChange)="showAss()">
+            <select class="form-control"   [(ngModel)]="assignment.UserID" (ngModelChange)="showAssignment()">
              <option *ngFor="let item of UserList; let i = index" [ngValue]="UserList[i].id">
                 {{UserList[i].userName}}
               </option>
@@ -75,11 +75,11 @@
           
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose()">Close</button>
-          <div *ngIf="save"><button (click)="saveAss()" type="submit" class="btn btn-primary">Assignment</button></div>
-          <div *ngIf="edit"><button (click)="editAss()" type="submit" class="btn btn-primary">Edit</button></div>
+          <div *ngIf="save"><button (click)="saveAssignment()" type="submit" class="btn btn-primary">Assignment</button></div>
+          <div *ngIf="edit"><button (click)="editAssignment()" type="submit" class="btn btn-primary">Edit</button></div>
         </div>
         <div class="table-responsive">
-            <h6>Assignments by User</h6>
+            <h6>Assignment by User</h6>
         <table id="mytable1" class="table table-bordred table-striped">
             <thead>
              
@@ -89,11 +89,11 @@
           
             </thead>
             <tbody>
-              <tr *ngFor="let item of AssList;let i = index">
+              <tr *ngFor="let item of AssignmentList;let i = index">
                 <td>{{item.softwareName}}</td>            
                 <td>{{item.hardwareName}}</td> 
                 <td><span class="btn btn-primary btn-xs" >
-                    <span class="nc-icon nc-simple-remove" (click)="OpenAssModal(confirm,'delete', i)"></span></span></td>
+                    <span class="nc-icon nc-simple-remove" (click)="deleteAssignment(i)"></span></span></td>
                
               </tr>
             </tbody>
@@ -105,7 +105,7 @@
     <ng-template #confirm>
       <div class="modal-body text-center">
         <p>Do you want to Delete?</p>
-        <button type="button" class="btn btn-default" (click)="deleteAss()" >Yes</button>
+        <button type="button" class="btn btn-default" (click)="deleteAssignment()" >Yes</button>
         <button type="button" class="btn btn-primary" (click)="onClose()" >No</button>
       </div>
     </ng-template>
